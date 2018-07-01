@@ -88,5 +88,19 @@ public class ClientProduto {
 		LOGGER.info(
 				"id={} excluido", id);
 	}
+	
+	public void atualizar(final Produto produto) {
+		LOGGER.info(
+				"editando {},", produto);
+
+		restTemplate
+			.put(
+				URL_BASE, 
+				produto
+			);
+
+		LOGGER.info(
+				"{} editado", produto);
+	}
 
 }

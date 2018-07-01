@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	<title>Desafio Imusica</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	
+	
+	<div class="container">
+		<form th:action="@{'/produto/'+ ${produto.id}}" th:object="${produto}" th:method="PUT" class="form-signin">
+			<h3 class="form-signin-heading" th:text="Produto"></h3>
+			
+			<div class="alert alert-success" th:if="${msgSuccess}">
+  				<span th:utext="${msgSuccess}"></span>
+			</div>
+
+			<div class="alert alert-danger" th:if="${msgErro}">
+  				<span th:utext="${msgErro}"></span>
+			</div>
+			
+			<br/>
+			 
+			<input type="text" th:field="*{nome}" th:placeholder="Nome" class="form-control" />
+			<br/>
+			
+			<input type="text" th:field="*{descricao}" th:placeholder="Descrição" class="form-control" />
+			<br/>
+			
+			<input type="text" th:field="*{quantidade}" th:placeholder="Quantidade" class="form-control" />
+			<br/>
+			
+			<input type="text" th:field="*{preco}" th:placeholder="Preço" class="form-control" />
+			<br/>
+
+			<div align="center" th:if="${param.error}">
+				<p style="font-size: 20; color: #FF1C19;">Os campos devem ser todos preenchidos</p>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Cadastrar" type="Submit" th:text="Atualizar"></button>
+		</form>
+	</div>
+</body>
+</html>

@@ -12,8 +12,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.imusica.desafio.client.ClientProduto;
 import br.com.imusica.desafio.model.Produto;
@@ -35,8 +35,7 @@ public class ProdutoController {
 	@PostMapping()
 	public String cadastrar(
 			Produto produto, 
-			Model model, 
-			RedirectAttributes redirectAttributes) {
+			Model model) {
 		
 		if(existeCampoInvalido(produto)) {
 			LOGGER.info("campo(s) inválido(s)");
@@ -103,4 +102,52 @@ public class ProdutoController {
 		model.addAttribute("msgSuccess", mensagemSucesso);
 		return listar(model);
 	}
+	
+	@GetMapping("/editar/{id}")
+	public String editar(@PathVariable("id") String id, Model model) {
+		final Produto produto = 
+				cliente.buscarPorId(id);
+		
+		if(Objects.isNull(produto)) {
+			model.addAttribute("msgErro", "Erro ao buscar para edição pelo id " + id + ".");
+			return listar(model);
+		}
+
+		LOGGER.info("editando {}", produto);
+
+		model.addAttribute("produto", produto);
+		return "editar";
+	}
+	
+	
+	@PutMapping("{id}")
+	public String atualizar(
+			@PathVariable("id") String id,
+			Produto produto, 
+			Model model) {
+		
+		if(existeCampoInvalido(produto)) {
+			LOGGER.info("campo(s) inválido(s)");
+			model.addAttribute("msgErro", "Todos os campos devem ser informados");
+			model.addAttribute("produto", produto);
+			return "editar";
+		}
+		
+		final Produto produtoBuscado = cliente.buscarPorId(id);
+		if(Objects.isNull(produtoBuscado)) {
+			LOGGER.info("id {} não encontrado para atualização", id);
+			model.addAttribute("msgErro", "Erro para encontrar produto para atualização.");
+			return listar(model);
+		}
+
+		produto.setId(id);
+		cliente.atualizar(produto);
+
+		LOGGER.info("{} atualizado.", produto);
+		String mensagemSucesso = "Produto " + produto.getNome() + " atualizado.";
+		model.addAttribute("msgSuccess", mensagemSucesso);
+		
+		return listar(model);
+	}
+	
 }
