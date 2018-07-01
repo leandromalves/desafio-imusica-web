@@ -11,7 +11,17 @@
 </head>
 
 <body>
-	
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Desafio Menu</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li ><a href="/produto/listar">Listar</a></li>
+				<li><a href="/produto">Cadastrar</a></li>
+			</ul>
+		</div>
+	</nav>
 	
 	<div class="container">
 		<form th:action="@{'/produto/'+ ${produto.id}}" th:object="${produto}" th:method="PUT" class="form-signin">

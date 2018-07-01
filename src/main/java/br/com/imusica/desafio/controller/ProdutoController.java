@@ -56,7 +56,7 @@ public class ProdutoController {
 		String mensagemSucesso = "Produto " + produto.getNome() + " incluído.";
 		model.addAttribute("msgSuccess", mensagemSucesso);
 		
-		return novo(model);
+		return listar(model);
 	}
 
 	private boolean existeCampoInvalido(
