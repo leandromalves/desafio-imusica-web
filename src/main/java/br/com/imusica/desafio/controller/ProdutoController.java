@@ -27,6 +27,7 @@ public class ProdutoController {
 	@Autowired
 	private ClientProduto cliente;
 	
+	
 	@GetMapping
 	public String novo(Model model) {
 		return "novo";

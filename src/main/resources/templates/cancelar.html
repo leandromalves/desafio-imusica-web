@@ -19,14 +19,19 @@
 			<ul class="nav navbar-nav">
 				<li ><a href="/produto/listar">Listar</a></li>
 				<li><a href="/produto">Cadastrar</a></li>
-				<li><a href="/cancelaCompra/listar">Cancelar Compra</a></li>
+				<li class="active"><a href="#">Cancelar Compra</a></li>
 			</ul>
 		</div>
-	</nav>
+	</nav>	
+	
 	
 	<div class="container">
-		<form th:action="@{'/produto/'+ ${produto.id}}" th:object="${produto}" th:method="PUT" class="form-signin">
-			<h3 class="form-signin-heading" th:text="Produto"></h3>
+		
+		<h4 class="form-signin-heading">Simular problema em Venda - Cancelando Venda </h4>
+		<h6 class="form-signin-heading">Selecione um produto, adicione a quantidade e clique em cancelar. Com isso uma simulação
+		de venda cancelada será feita e esta quantidade será escrita em fila para ser somada novamente à quantidade do produto.</h6>
+	
+		<form th:action="@{/cancelaCompra}" method="POST" class="form-signin">
 			
 			<div class="alert alert-success" th:if="${msgSuccess}">
   				<span th:utext="${msgSuccess}"></span>
@@ -37,24 +42,23 @@
 			</div>
 			
 			<br/>
-			<input type="hidden" th:field="*{version}" />
+			 
+			<select id="produtoId" name="produtoId">
+		   	 <option value="" selected="selected">Selecione o Produto</option>
+		    	<option th:each="produto : ${produtos}" th:value="${produto.id}" th:text="${produto.nome}"></option>
+		    </select>
+			<br/><br/>
 			
-			<input type="text" th:field="*{nome}" th:placeholder="Nome" class="form-control" />
+			<input type="text" id="quantidadeComprada" name="quantidadeComprada"  th:placeholder="Quantidade"
+				class="form-control" />  
 			<br/>
 			
-			<input type="text" th:field="*{descricao}" th:placeholder="Descrição" class="form-control" />
-			<br/>
 			
-			<input type="text" th:field="*{quantidade}" th:placeholder="Quantidade" class="form-control" />
-			<br/>
-			
-			<input type="text" th:field="*{preco}" th:placeholder="Preço" class="form-control" />
-			<br/>
 
 			<div align="center" th:if="${param.error}">
 				<p style="font-size: 20; color: #FF1C19;">Os campos devem ser todos preenchidos</p>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Cadastrar" type="Submit" th:text="Atualizar"></button>
+			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Cancelar" type="Submit" th:text="Cancelar"></button>
 		</form>
 	</div>
 </body>

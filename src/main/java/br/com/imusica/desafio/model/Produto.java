@@ -2,12 +2,10 @@ package br.com.imusica.desafio.model;
 
 import java.math.BigDecimal;
 
-import javax.validation.constraints.NotNull;
-
 public class Produto {
 	
     private String id;
-	
+    private Long version;
 	private String nome;
 	private String descricao;
 	private BigDecimal preco;
@@ -18,6 +16,12 @@ public class Produto {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public Long getVersion() {
+		return version;
+	}
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	public String getNome() {
 		return nome;
@@ -43,7 +47,6 @@ public class Produto {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	
 	
 	@Override
 	public String toString() {
