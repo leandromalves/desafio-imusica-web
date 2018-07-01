@@ -11,13 +11,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
 
 
 	<div class="container">
-		<form th:action="@{/produto}" method="POST" class="form-signin">
 			<h3 class="form-signin-heading" th:text="Produto"></h3>
 
 			<div class="alert alert-success" th:if="${msgSuccess}">
@@ -38,6 +38,7 @@
 						<th>Descrição</th>
 						<th>Preço</th>
 						<th>Quantidade</th>
+						<th>Ação</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,13 +48,18 @@
 							<td th:text="${produto.descricao}"></td>
 							<td th:text="${produto.preco}"></td>
 							<td th:text="${produto.quantidade}"></td>
+							<td>
+								<div class="btn-group pull-right">
+							   		<a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${produto.id})}" >Editar</a>
+							   		<a class="delete btn btn-sm btn-danger" th:href="@{/produto/excluir/{id}(id=${produto.id})}">Excluir</a>
+							   </div>
+							</td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
 
 
-		</form>
 	</div>
 </body>
 </html>

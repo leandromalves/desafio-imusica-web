@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.imusica.desafio.model.Produto;
@@ -21,7 +22,7 @@ public class ClientProduto {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientProduto.class);
 	
-	private static final String URL_BASE = "http://localhost:8080/produtos";
+	private static final String URL_BASE = "http://localhost:8080/produtos/";
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
@@ -35,7 +36,7 @@ public class ClientProduto {
 				);
 
 		LOGGER.info(
-				"location de produto inserido:", 
+				"location de produto inserido : {}", 
 				location != null ? location.getPath() : null);
 		return location != null;
 	}
@@ -55,6 +56,37 @@ public class ClientProduto {
 		}
 
 		return produtos;
+	}
+
+	
+	public Produto buscarPorId(final String id) {
+		
+		if(StringUtils.isEmpty(id)) return null;
+
+		final Produto produto = 
+				restTemplate
+					.getForObject(
+							URL_BASE + id, 
+							Produto.class
+					);
+		
+		LOGGER.info(
+			"{} retornado em consulta por id.", 
+			produto
+		);
+		
+		return produto;
+	}
+	
+
+	public void excluir(final String id) {
+		LOGGER.info(
+				"excluindo id={},", id);
+		
+		restTemplate.delete(URL_BASE + id);
+		
+		LOGGER.info(
+				"id={} excluido", id);
 	}
 
 }

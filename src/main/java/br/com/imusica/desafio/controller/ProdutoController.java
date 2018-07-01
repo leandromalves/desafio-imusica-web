@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -82,5 +83,24 @@ public class ProdutoController {
 
 		model.addAttribute("produtos", produtos);
 		return "listar";
+	}
+	
+	@GetMapping("/excluir/{id}")
+	public String excluir(@PathVariable("id") String id, Model model) {
+		final Produto produto = 
+				cliente.buscarPorId(id);
+		
+		if(Objects.isNull(produto)) {
+			model.addAttribute("msgErro", "Erro ao buscar para exclusão pelo id " + id + ".");
+			return listar(model);
+		}
+
+		LOGGER.info("excluindo {}", produto);
+
+		cliente.excluir(produto.getId());
+
+		String mensagemSucesso = "Produto " + produto.getNome() + " excluído.";
+		model.addAttribute("msgSuccess", mensagemSucesso);
+		return listar(model);
 	}
 }
