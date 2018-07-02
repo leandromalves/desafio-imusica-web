@@ -15,6 +15,16 @@ já o "levanta" para assim facilitar para o avaliador.
 
 **Url de acesso ao projeto Web:**  *http://localhost:8090* 
 
+Será aberta uma página contendo no topo o menu do sistema.
+
+O sistema permite as seguintes funcionalidades: 
+
+- Listar Produto
+- Cadastrar Produto
+- Editar Produto
+- Excluir Produto
+- Cancelar Compra (simular problema no pagamento)
+
 
 ### Como executar: 
 
